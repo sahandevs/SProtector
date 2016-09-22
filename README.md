@@ -37,9 +37,9 @@ Note : :beginner: means de4dot(and some moded ones) tested and failded in deobf
 - Nooby coded ( im newbie to dnlib so plz forgive me . i'll fix nooby codes)
 
 ## :+1: Thanks To !
--[0xd4d](https://github.com/0xd4d) for his great [dnlib](https://github.com/0xd4d) library
--Rexprog for his anti debugger
--[gubed](https://github.com/gubed) for his [Protect.NET](https://github.com/gubed/Protect.NET) `i've read this source code to realize how dnlib works !`
--[yck1509](https://github.com/yck1509) for [ConfuserEx](https://github.com/yck1509/ConfuserEx) ( I've used ConfuserEx AntiILDasm method )
+- [0xd4d](https://github.com/0xd4d) for his great [dnlib](https://github.com/0xd4d) library
+- Rexprog for his anti debugger
+- [gubed](https://github.com/gubed) for his [Protect.NET](https://github.com/gubed/Protect.NET) `i've read this source code to realize how dnlib works !`
+- [yck1509](https://github.com/yck1509) for [ConfuserEx](https://github.com/yck1509/ConfuserEx) ( I've used ConfuserEx AntiILDasm method )
 - And you :heart:
 
