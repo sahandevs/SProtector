@@ -4,7 +4,7 @@
 `Sorry for my bad english :(`
 
 :notes: Notes : 
-- This is not a stable protector so dont relie on it !
+- This is not a stable protector so dont rely on it !
 - This project have a lot of bugs and i'm glad to fix them ( Post them in Issues or mail me :thumbsup:)
 - This project is my first exprience in dnlib so sorry for a little messy commented codes and ...
 
@@ -19,7 +19,7 @@
 
 ## :file_folder: To do list & features
 
-Note : :beginner: means de4dot(and some moded ones) tested and failded in deobf
+Note : :beginner: means de4dot(and some moded ones) tested and failded in deobf (Methods without it means not tested)
 
 - [x] Anti Debug ( thanks to @RexProg :heart: )
 - [x] :beginner:Constants ( i've commented integer encryption because it is not completed yet)
@@ -27,7 +27,7 @@ Note : :beginner: means de4dot(and some moded ones) tested and failded in deobf
 - [x] :beginner:FakeModules ( Will add a a lot of fake modules ! )
 - [x] :beginner:Renamer ( May not work on wpf apps :( )
 - [x] AntiILDasm ( Not tested !) 
-- [X] Random junk codeS
+- [X] Random junk codes
 
 ## :warning: known issues
 
