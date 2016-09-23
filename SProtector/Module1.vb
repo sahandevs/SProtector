@@ -81,9 +81,12 @@ Module Module1
             SProtector.Protectors.FakeModules.Protect() ' Protect file by adding a lot of fake modules
             LogGood("Protecting With [FakeModules](Done)")
 
-            LogInfo("Protecting With [Renamer]...")
-            SProtector.Protectors.Renamer.Protect() 'Protect method , fields and ... by changing their name to a random string
-            LogGood("Protecting With [Renamer](Done)")
+
+            'It may not work on some apps :( i'm trying to fix it
+
+            'LogInfo("Protecting With [Renamer]...")
+            'SProtector.Protectors.Renamer.Protect() 'Protect method , fields and ... by changing their name to a random string
+            'LogGood("Protecting With [Renamer](Done)")
 
 
             If My.Computer.FileSystem.FileExists(SProtector.GlobAssembly.AsmOutputPath) Then My.Computer.FileSystem.DeleteFile(SProtector.GlobAssembly.AsmOutputPath)  ' delete output file if exists

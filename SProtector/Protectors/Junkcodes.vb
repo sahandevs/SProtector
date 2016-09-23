@@ -47,9 +47,15 @@ Namespace SProtector.Protectors
                 If mDef.HasBody Then ' check if it has body
                     Dim numberofjunks = Int(mDef.Body.Instructions.Count / 4) 'get number of junks to add numberofjunks
                     Dim beforeproceesscount = mDef.Body.Instructions.Count
-                    For i = 0 To numberofjunks
-                        Dim r As Random = New Random
-                        mDef.Body.Instructions.Insert(Int(Rnd() * beforeproceesscount), New Instruction(OpCodes.[Call], junktype.Methods(0))) ' inject junkcode to a random point
+
+
+                    For inst = 0 To mDef.Body.Instructions.Count - 1
+                        On Error Resume Next
+                        If mDef.Body.Instructions(inst).OpCode Is OpCodes.Call Then
+                            mDef.Body.Instructions.Insert(inst + 1, New Instruction(OpCodes.[Call], junktype.Methods(0))) ' inject junkcode to a random point
+                            inst += 3
+                        End If
+
                     Next
 
                     mDef.Body.OptimizeBranches() ' OptimizeBranches
