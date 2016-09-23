@@ -33,7 +33,7 @@ Note : :beginner: means de4dot(and some moded ones) tested and failded in deobf 
 
 Not fixed fnes : 
 
-- Renamer May not work on wpf apps
+- Renamer May not work on wpf apps ( and buggy on win forms too :( )
 
 Recently fixed :
 
