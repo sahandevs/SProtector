@@ -2,58 +2,21 @@
 
 Namespace SProtector.Tools
     Public Class StringProtection
+
+        'Generates random string with lenght(len) you want
         Public Function Random(len As Integer) As String
 
-            Dim text As String
-            text = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRST"
-            Dim array As Char() = New Char(len - 1) {}
+            Dim charset As String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRST" 'charset
+            Dim array As Char() = New Char(len - 1) {} ' array of random string
             For i As Integer = 0 To len - 1
-                array(i) = text(Int(Rnd() * text.Length))
+                array(i) = charset(Int(Rnd() * charset.Length)) ' put a random char into the array
             Next
-
-            Dim res = New String(array)
-
-            Return res
+            Return New String(array)
         End Function
-        Public Function Encrypt(TheText As String) As String
-            Dim text As String = ""
-            Dim arg_13_0 As Integer = 1
-            Dim num As Integer = Strings.Len(TheText)
-            Dim num2 As Integer = arg_13_0
-            ' The following expression was wrapped in a checked-statement
-            While True
-                Dim arg_4B_0 As Integer = num2
-                Dim num3 As Integer = num
-                If arg_4B_0 > num3 Then
-                    Exit While
-                End If
-                Dim str As String = Conversions.ToString(Strings.Chr(Strings.Asc(Strings.Mid(TheText, num2, 1)) + 2))
-                text += str
-                num2 += 1
-            End While
-            Return Strings.Trim(text)
-        End Function
-        Public Function CryptDecrypt2(s As String) As String
-            Dim arg_0B_0 As Long = 1L
-            Dim num As Long = CLng(Strings.Len(s))
-            Dim num2 As Long = arg_0B_0
-            ' The following expression was wrapped in a checked-statement
-            Dim text As String
-            While True
-                Dim arg_3D_0 As Long = num2
-                Dim num3 As Long = num
-                If arg_3D_0 > num3 Then
-                    Exit While
-                End If
-                text += Conversions.ToString(Strings.Chr(Strings.Asc(Strings.Mid(s, CInt(num2), 1)) Xor 255))
-                num2 += 1L
-            End While
-            Return text
-        End Function
+        'Crypt/Decrpy text with RO13 method
         Public Function CryptDecrypt(text As String) As String
             Dim text2 As String = ""
             Dim arg_12_0 As Integer = 0
-            ' The following expression was wrapped in a checked-statement
             Dim num As Integer = text.Length - 1
             Dim num2 As Integer = arg_12_0
             While True
@@ -96,6 +59,44 @@ Namespace SProtector.Tools
             End While
             Return text2
         End Function
+
+
+
+
+        'Public Function Encrypt(TheText As String) As String
+        '    Dim text As String = ""
+        '    Dim arg_13_0 As Integer = 1
+        '    Dim num As Integer = Strings.Len(TheText)
+        '    Dim num2 As Integer = arg_13_0
+        '    While True
+        '        Dim arg_4B_0 As Integer = num2
+        '        Dim num3 As Integer = num
+        '        If arg_4B_0 > num3 Then
+        '            Exit While
+        '        End If
+        '        Dim str As String = Conversions.ToString(Strings.Chr(Strings.Asc(Strings.Mid(TheText, num2, 1)) + 2))
+        '        text += str
+        '        num2 += 1
+        '    End While
+        '    Return Strings.Trim(text)
+        'End Function
+        'Public Function CryptDecrypt2(s As String) As String
+        '    Dim arg_0B_0 As Long = 1L
+        '    Dim num As Long = CLng(Strings.Len(s))
+        '    Dim num2 As Long = arg_0B_0
+        '    ' The following expression was wrapped in a checked-statement
+        '    Dim text As String
+        '    While True
+        '        Dim arg_3D_0 As Long = num2
+        '        Dim num3 As Long = num
+        '        If arg_3D_0 > num3 Then
+        '            Exit While
+        '        End If
+        '        text += Conversions.ToString(Strings.Chr(Strings.Asc(Strings.Mid(s, CInt(num2), 1)) Xor 255))
+        '        num2 += 1L
+        '    End While
+        '    Return text
+        'End Function
     End Class
 End Namespace
 

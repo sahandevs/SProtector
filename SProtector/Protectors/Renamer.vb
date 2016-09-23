@@ -6,6 +6,8 @@ Imports dnlib.DotNet
 Imports dnlib.DotNet.Emit
 Imports SProtector.SProtector.Tools.StringProtection
 Namespace SProtector.Protectors
+
+    'A helper class for creating random string that are not generated before
     Class generatedStrings
         Private strings As New List(Of String)
         Private Shared StringProtection As New Tools.StringProtection
@@ -17,109 +19,108 @@ Back:
             If strings.IndexOf(tmp) <> -1 Then
                 GoTo Back
             End If
-
-
             strings.Add(tmp)
             Return tmp
         End Function
     End Class
 
     Class Renamer
-        Private Shared StringProtection As New generatedStrings
-        Private Shared TypeDefNames As New Dictionary(Of String, String)()
-        Private Shared namespaces As New Collection(Of TypeDef)()
-        Private Shared NamespaceNames As New List(Of String)()
-        Private Shared NamespaceNamesEncrypt As New List(Of String)()
+        Private Shared StringProtection As New generatedStrings ' Helper class for random string
+        Private Shared TypeDefNames As New Dictionary(Of String, String)() ' list all of type defs names
+        Private Shared namespaces As New Collection(Of TypeDef)() ' list of all namespaces
+        Private Shared NamespaceNames As New List(Of String)() ' list of all namespaces names
+        Private Shared NamespaceNamesEncrypt As New List(Of String)() ' list of all namespaces encrypted names
+
+        'A Sub for doing protecting process
         Public Shared Sub Protect()
-            For mDef = 0 To GlobAssembly.Asm.Modules.Count - 1
-                Dim moduleDef = GlobAssembly.Asm.Modules(mDef)
-                For j = 0 To moduleDef.Types.Count - 1
-                    Dim td = moduleDef.Types(j)
-                    renamer(td, GlobAssembly.Asm)
+            For mDef = 0 To GlobAssembly.Asm.Modules.Count - 1 ' for every module in main assembly
+                Dim moduleDef = GlobAssembly.Asm.Modules(mDef) ' get current
+                For j = 0 To moduleDef.Types.Count - 1 ' for every type in current module
+                    Dim td = moduleDef.Types(j) ' gets current type
+                    renamer(td, GlobAssembly.Asm) ' do renamer method
                 Next
-                moduleDef.EntryPoint.Name = StringProtection.random(Int(Rnd() * 100))
+                moduleDef.EntryPoint.Name = StringProtection.random(Int(Rnd() * 100)) ' generate a random name for entry point
             Next
         End Sub
 
+        'renaming process
         Public Shared Sub renamer(td As TypeDef, asm As AssemblyDef)
-            If td.HasNestedTypes Then
-                For i = 0 To td.NestedTypes.Count - 1
-                    renamer(td.NestedTypes(i), asm)
+            If td.HasNestedTypes Then 'check if type has nested types
+                For i = 0 To td.NestedTypes.Count - 1 'get all nestedtypes
+                    renamer(td.NestedTypes(i), asm) ' do renamer to the nested types too :D
                 Next
             End If
 
-            If Not NamespaceNames.Contains(td.[Namespace]) Then
-                NamespaceNames.Add(td.[Namespace])
-                NamespaceNamesEncrypt.Add(StringProtection.random(Int(Rnd() * 100)))
+            If Not NamespaceNames.Contains(td.[Namespace]) Then ' check if current type.namespace if it is crypted before or not
+                NamespaceNames.Add(td.[Namespace]) 'if not add orginal name to list
+                NamespaceNamesEncrypt.Add(StringProtection.random(Int(Rnd() * 100))) 'generate a random name for orginal name 
             End If
-            Dim [Namespace] = NamespaceNamesEncrypt(NamespaceNames.IndexOf(td.[Namespace]))
-            If checkType(td) Then
-                Dim text = StringProtection.random(Int(Rnd() * 100))
 
+            Dim [Namespace] = NamespaceNamesEncrypt(NamespaceNames.IndexOf(td.[Namespace])) 'get current random name for current namespace !
+            If checkType(td) Then ' run checktype functiong
+                Dim text = StringProtection.random(Int(Rnd() * 100)) ' generate a random string for resoruce name and typename
+
+                ' i dunnu why but i've rechecked these :|
                 If td.BaseType Is Nothing Then
                     Return
                 End If
                 If td.IsNestedAssembly Then
                     Return
                 End If
-                'if (td.BaseType.Name.Contains("Form"))
-                '{
-                For Each res In asm.ManifestModule.Resources
-                    If res.Name.Contains(td.[Namespace]) AndAlso td.[Namespace] <> "" AndAlso res.Name.Contains(td.Name) AndAlso td.Name <> "" Then
-                        Dim resName As String = res.Name.Replace(".resources", "")
-                        res.Name = res.Name.Replace(td.[Namespace], [Namespace])
-                        res.Name = res.Name.Replace(td.Name, text)
 
-                        For Each mDef In td.Methods
-                            'if (!mDef.HasBody && !mDef.FullName.Contains("getRes")) continue;
-                            If mDef.HasBody Then
-                                For Each instr As Instruction In mDef.Body.Instructions
-                                    If instr.OpCode Is OpCodes.Ldstr Then
+                For Each res In asm.ManifestModule.Resources ' get all resources in main assembly
+                    If res.Name.Contains(td.[Namespace]) AndAlso td.[Namespace] <> "" AndAlso res.Name.Contains(td.Name) AndAlso td.Name <> "" Then ' check if we sould edit this resoruce or not
+                        Dim resName As String = res.Name.Replace(".resources", "") ' rempve .resources from resource name
+                        res.Name = res.Name.Replace(td.[Namespace], [Namespace]) 'change reource name's orginal namespace to generated one
+                        res.Name = res.Name.Replace(td.Name, text) 'change resource name to generated one (text)
 
-                                        If resName IsNot Nothing AndAlso instr.Operand.ToString().Contains(resName) Then
-                                            instr.Operand = instr.Operand.ToString().Replace(td.[Namespace], [Namespace]).Replace(td.Name, text)
+                        For Each mDef In td.Methods ' get all methods
+                            If mDef.HasBody Then ' if method has a body
+                                For Each instr As Instruction In mDef.Body.Instructions ' get all Instructions
+                                    If instr.OpCode Is OpCodes.Ldstr Then 'check opcode is ldstr (setting an string)
+                                        If resName IsNot Nothing AndAlso instr.Operand.ToString().Contains(resName) Then ' check if we sould change operand or not
+                                            instr.Operand = instr.Operand.ToString().Replace(td.[Namespace], [Namespace]).Replace(td.Name, text) ' change orginal names to generated ones that we've generate ( if we dont app will not run ^_^ )
                                         End If
                                     End If
                                 Next
-                                ' }
                             End If
                         Next
                     End If
                 Next
 
-                td.Name = text
-                td.[Namespace] = [Namespace]
+                td.Name = text 'edit type name to generated one ( same as resource name )
+                td.[Namespace] = [Namespace] 'change type's name space to generated one from list line 59
 
-                For i = 0 To td.Methods.Count - 1
-                    Dim md = td.Methods(i)
-                    If checkMethod(md) Then
-                        md.Name = StringProtection.random(Int(Rnd() * 100))
-                        For Each current In md.ParamDefs
-                            current.Name = StringProtection.random(Int(Rnd() * 100))
+                For i = 0 To td.Methods.Count - 1 'get all methods again
+                    Dim md = td.Methods(i) ' get current method
+                    If checkMethod(md) Then ' check method
+                        md.Name = StringProtection.random(Int(Rnd() * 100)) ' change method name to a random string
+                        For Each current In md.ParamDefs ' get all methods'parameters
+                            current.Name = StringProtection.random(Int(Rnd() * 100)) ' change methods'parameters to a random one
                         Next
-                        If md.HasBody AndAlso md.Body.HasVariables Then
-                            For Each current2 In md.Body.Variables
-                                current2.Name = StringProtection.random(Int(Rnd() * 100))
+                        If md.HasBody AndAlso md.Body.HasVariables Then ' check if method has body and var
+                            For Each current2 In md.Body.Variables ' get all vars
+                                current2.Name = StringProtection.random(Int(Rnd() * 100)) ' generate a random name for current local var
                             Next
                         End If
                     End If
                 Next
-                For i = 0 To td.Fields.Count - 1
+                For i = 0 To td.Fields.Count - 1 ' get all type's fields
                     Dim fd = td.Fields(i)
                     If checkField(fd) Then
-                        fd.Name = StringProtection.random(Int(Rnd() * 100))
+                        fd.Name = StringProtection.random(Int(Rnd() * 100)) ' generate a random name for the field
                     End If
                 Next
-                For i = 0 To td.Events.Count - 1
+                For i = 0 To td.Events.Count - 1 ' get all type's events
                     Dim ed = td.Events(i)
                     If checkEvent(ed) Then
-                        ed.Name = StringProtection.random(Int(Rnd() * 100))
+                        ed.Name = StringProtection.random(Int(Rnd() * 100)) ' generate a random name for it
                     End If
                 Next
-                For i = 0 To td.Properties.Count - 1
+                For i = 0 To td.Properties.Count - 1 ' change all type's properties
                     Dim pd = td.Properties(i)
                     If checkProperty(pd) Then
-                        pd.Name = StringProtection.random(Int(Rnd() * 100))
+                        pd.Name = StringProtection.random(Int(Rnd() * 100)) ' generate a random name for it
                     End If
                 Next
             End If
@@ -150,7 +151,7 @@ Back:
         End Function
 
         Public Shared Function checkType(td As TypeDef) As Boolean
-            Return Not td.IsRuntimeSpecialName AndAlso Not td.IsSpecialName AndAlso Not td.IsNestedFamilyOrAssembly AndAlso Not td.IsNestedFamilyAndAssembly
+            Return Not td.IsRuntimeSpecialName AndAlso Not td.IsSpecialName AndAlso Not td.IsNestedFamilyOrAssembly AndAlso Not td.IsNestedFamilyAndAssembly 'renamer shouldnt run if these things are true
         End Function
     End Class
 End Namespace

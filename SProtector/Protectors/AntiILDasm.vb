@@ -4,6 +4,8 @@ Imports dnlib.DotNet.Emit
 
 Namespace SProtector.Protectors
     Public Class AntiILDasm
+
+        'i've not checked this method and i dunnu how its work
         Public Shared Sub Protect()
             For Each [module] As ModuleDef In GlobAssembly.Asm.Modules
                 Dim attrRef As TypeRef = [module].CorLibTypes.GetTypeRef("System.Runtime.CompilerServices", "SuppressIldasmAttribute")
