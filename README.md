@@ -1,5 +1,5 @@
 # sProtector
-:beginner:sProtector is an .NET Protector Written by VB.NET . This project is just like a learning project for VB :heart:lovers:heart: ( like me :smirk: )
+:beginner:sProtector is an .NET Protector Written in VB.NET . This project is just like a learning project for VB :heart:lovers:heart: ( like me :smirk: )
 
 `Sorry for my bad english :(`
 
