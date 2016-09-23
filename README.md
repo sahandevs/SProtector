@@ -27,7 +27,7 @@ Note : :beginner: means de4dot(and some moded ones) tested and failded in deobf
 - [x] :beginner:FakeModules ( Will add a a lot of fake modules ! )
 - [x] :beginner:Renamer ( May not work on wpf apps :( )
 - [x] AntiILDasm ( Not tested !) 
-- [ ] Random junk code and random msgboxes
+- [X] Random junk codeS
 
 ## :warning: known issues
 
