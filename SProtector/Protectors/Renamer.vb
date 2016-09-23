@@ -79,7 +79,7 @@ Back:
                                 For Each instr As Instruction In mDef.Body.Instructions ' get all Instructions
                                     If instr.OpCode Is OpCodes.Ldstr Then 'check opcode is ldstr (setting an string)
                                         If resName IsNot Nothing AndAlso instr.Operand.ToString().Contains(resName) Then ' check if we sould change operand or not
-                                            instr.Operand = instr.Operand.ToString().Replace(td.[Namespace], [Namespace]).Replace(td.Name, text) ' change orginal names to generated ones that we've generate ( if we dont app will not run ^_^ )
+                                            instr.Operand = instr.Operand.Replace(td.[Namespace], [Namespace]).Replace(td.Name, text) ' change orginal names to generated ones that we've generate ( if we dont app will not run ^_^ )
                                         End If
                                     End If
                                 Next

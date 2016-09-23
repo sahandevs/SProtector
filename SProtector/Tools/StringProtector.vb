@@ -30,29 +30,27 @@ Namespace SProtector.Tools
                 Dim num5 As Integer = num4 + 13
                 Dim flag As Boolean = num4 <= 90 AndAlso num4 >= 65
                 If flag Then
-                    Dim flag2 As Boolean = num5 > 90
                     Dim value As Char
-                    If flag2 Then
+                    If num5 > 90 Then
                         Dim num6 As Integer = num5 - 90
                         value = Strings.ChrW(64 + num6)
                     Else
                         value = Strings.ChrW(num5)
                     End If
-                    text2 += Conversions.ToString(value)
+                    text2 += (value).ToString
                 Else
-                    Dim flag2 As Boolean = num4 <= 122 AndAlso num4 >= 97
-                    If flag2 Then
-                        flag = (num5 > 122)
+                    If num4 <= 122 AndAlso num4 >= 97 Then
+
                         Dim value As Char
-                        If flag Then
+                        If (num5 > 122) Then
                             Dim num6 As Integer = num5 - 122
                             value = Strings.ChrW(96 + num6)
                         Else
                             value = Strings.ChrW(num5)
                         End If
-                        text2 += Conversions.ToString(value)
+                        text2 += (value).ToString
                     Else
-                        text2 += Conversions.ToString(c)
+                        text2 += (c).ToString
                     End If
                 End If
                 num2 += 1

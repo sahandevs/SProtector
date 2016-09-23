@@ -77,8 +77,8 @@ Namespace SProtector.Protectors
                     If mmDef.HasBody Then ' check if method has body
                         For i = 0 To mmDef.Body.Instructions.Count - 1 ' get all body Instructions
                             Dim cur = mmDef.Body.Instructions(i) ' get current
-                            If cur.OpCode Is OpCodes.Ldstr AndAlso Not keys.Contains(cur.Operand.ToString()) AndAlso Not mmDef.FullName.Contains(meth1.Name) Then ' check these things if its ok then we will crypt string and OpCodes.Ldstr is for setting a string
-                                Dim key = StringProtection.CryptDecrypt(cur.Operand.ToString) ' crpyt orginal string with method
+                            If cur.OpCode Is OpCodes.Ldstr AndAlso Not keys.Contains(cur.Operand) AndAlso Not mmDef.FullName.Contains(meth1.Name) Then ' check these things if its ok then we will crypt string and OpCodes.Ldstr is for setting a string
+                                Dim key = StringProtection.CryptDecrypt(cur.Operand) ' crpyt orginal string with method
                                 cur.Operand = key ' set it to fist parameter of crypt method
                                 Const ran As Integer = 50 ' set random constant for random string lenght
                                 mmDef.Body.Instructions.Insert(i + 1, New Instruction(OpCodes.Ldstr, StringProtection.Random(ran))) ' set a random string with random const lenght to second fake parameter

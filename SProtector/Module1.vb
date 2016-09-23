@@ -36,7 +36,7 @@ Module Module1
 #If DEBUG Then
             input = "1.exe"
 #Else
-            input = sargs(0).ToString() 'read file path from first arg
+            input = sargs(0) 'read file path from first arg
 #End If
         Catch ex As Exception
             Console.WriteLine("Please Drag & Drop A File") 'show this message if something goes wrong
