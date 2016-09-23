@@ -13,7 +13,7 @@ Namespace SProtector.Tools
             Next
             Return New String(array)
         End Function
-        'Crypt/Decrpy text with RO13 method
+        'Crypt/Decrypt text with RO13 method
         Public Function CryptDecrypt(text As String) As String
             Dim text2 As String = ""
             Dim arg_12_0 As Integer = 0

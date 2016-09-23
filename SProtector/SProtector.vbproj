@@ -108,7 +108,7 @@
     <Compile Include="Protectors\AntiILDasm.vb" />
     <Compile Include="Protectors\Const.vb" />
     <Compile Include="Protectors\FakeModules.vb" />
-    <Compile Include="Protectors\FakeMsgbox.vb" />
+    <Compile Include="Protectors\Junkcodes.vb" />
     <Compile Include="Protectors\Renamer.vb" />
     <Compile Include="Tools\StringProtector.vb" />
   </ItemGroup>

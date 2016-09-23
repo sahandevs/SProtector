@@ -56,18 +56,20 @@ Module Module1
 
             ' Not by now you cant use both constants or crasher and antidebug together
 
+            LogInfo("Protecting With [Junk Codes]...")
+            SProtector.Protectors.Junkcodes.Protect() ' Protect with anti debug method
+            LogGood("Protecting With [Junk Codes](Done)")
+            SProtector.GlobAssembly.Asm2 = AssemblyDef.Load("Methods.exe") ' reloads external exe files for injecting methods to my global var "asm2"
             LogInfo("Protecting With [Rex Anti Debug]...")
             SProtector.Protectors.AntiDebug.Protect() ' Protect with anti debug method
             LogGood("Protecting With [Rex Anti Debug](Done)")
 
             SProtector.GlobAssembly.Asm2 = AssemblyDef.Load("Methods.exe") ' reloads external exe files for injecting methods to my global var "asm2"
+
+
             LogInfo("Protecting With [Constants]...")
             SProtector.Protectors.Constants.Protect() ' Protect with constants ( Crypting strings and integers ) method
             LogGood("Protecting With [Constants](Done)")
-
-            'LogInfo("Protecting With [Crasher]...")
-            'SProtector.Protectors.Constants.Protect() 'i've removed this but i'll add it soon
-            'LogGood("Protecting With [Crasher](Done)")
 
 
 
@@ -84,7 +86,6 @@ Module Module1
             LogGood("Protecting With [Renamer](Done)")
 
 
-            '   Process.Start(SProtector.GlobAssembly.AsmOutputPath)
             If My.Computer.FileSystem.FileExists(SProtector.GlobAssembly.AsmOutputPath) Then My.Computer.FileSystem.DeleteFile(SProtector.GlobAssembly.AsmOutputPath)  ' delete output file if exists
 
             SProtector.GlobAssembly.Asm.Modules(0).Write(SProtector.GlobAssembly.AsmOutputPath) ' save file
