@@ -23,7 +23,7 @@ Note : :beginner: means de4dot(and some moded ones) tested and failded in deobf
 
 - [x] Anti Debug ( thanks to @RexProg :heart: )
 - [x] :beginner:Constants ( i've commented integer encryption because it is not completed yet)
-- [x] :beginner:Crasher (it will crash app like dnSpy when you want to decompile classes by adding a alot of junk code ! it is not an stable method but i will work on it )
+- [x] :beginner:Crasher (it will crash app like dnSpy when you want to decompile classes by adding a alot of junk code ! it is not an stable method but i will work on it ) - Removed :(
 - [x] :beginner:FakeModules ( Will add a a lot of fake modules ! )
 - [x] :beginner:Renamer ( May not work on wpf apps :( )
 - [x] AntiILDasm ( Not tested !) 
@@ -31,10 +31,17 @@ Note : :beginner: means de4dot(and some moded ones) tested and failded in deobf
 
 ## :warning: known issues
 
-- ( Constants or Crasher ) & Anti Debug cannot be together
+Not fixed fnes : 
+
 - Renamer May not work on wpf apps
-- little messy code but i try to clean code and fully comment it
-- Nooby coded ( im newbie to dnlib so plz forgive me . i'll fix nooby codes)
+
+Recently fixed :
+
+- little messy code but i try to clean code and fully comment it - Fixed ^_^ all coes commented
+- Nooby coded ( im newbie to dnlib so plz forgive me . i'll fix nooby codes) - Fixed ^_^
+- Constants Renames just first string in method - Fixed ^_^
+- can't use constants and antidebug together - Fixed ^_^
+
 
 ## :+1: Thanks To !
 - [0xd4d](https://github.com/0xd4d) for his great [dnlib](https://github.com/0xd4d) library
