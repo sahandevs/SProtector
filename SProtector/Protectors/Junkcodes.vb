@@ -45,15 +45,11 @@ Namespace SProtector.Protectors
             End If
             For Each mDef As MethodDef In td.Methods ' get all methods
                 If mDef.HasBody Then ' check if it has body
-                    Dim numberofjunks = Int(mDef.Body.Instructions.Count / 4) 'get number of junks to add numberofjunks
-                    Dim beforeproceesscount = mDef.Body.Instructions.Count
-
-
-                    For inst = 0 To mDef.Body.Instructions.Count - 1
-                        On Error Resume Next
-                        If mDef.Body.Instructions(inst).OpCode Is OpCodes.Call Then
-                            mDef.Body.Instructions.Insert(inst + 1, New Instruction(OpCodes.[Call], junktype.Methods(0))) ' inject junkcode to a random point
-                            inst += 3
+                    For inst = 0 To mDef.Body.Instructions.Count - 1 ' get all Instructions
+                        On Error Resume Next ' ignore errors
+                        If mDef.Body.Instructions(inst).OpCode Is OpCodes.Call Then ' check if it is calling a method
+                            mDef.Body.Instructions.Insert(inst + 1, New Instruction(OpCodes.[Call], junktype.Methods(0))) ' inject junkcode next to it
+                            inst += 3 ' skip injected lines
                         End If
 
                     Next
